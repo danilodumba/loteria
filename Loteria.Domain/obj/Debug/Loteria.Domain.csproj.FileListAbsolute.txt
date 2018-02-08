@@ -1,0 +1,6 @@
+C:\Projetos\Estudo\Loteria\Loteria.Domain\bin\Debug\Loteria.Domain.dll
+C:\Projetos\Estudo\Loteria\Loteria.Domain\bin\Debug\Loteria.Domain.pdb
+C:\Projetos\Estudo\Loteria\Loteria.Domain\obj\Debug\Loteria.Domain.csproj.CoreCompileInputs.cache
+C:\Projetos\Estudo\Loteria\Loteria.Domain\obj\Debug\Loteria.Domain.dll
+C:\Projetos\Estudo\Loteria\Loteria.Domain\obj\Debug\Loteria.Domain.pdb
+C:\Projetos\Estudo\Loteria\Loteria.Domain\obj\Debug\Loteria.Domain.csprojResolveAssemblyReference.cache

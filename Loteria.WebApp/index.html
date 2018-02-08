@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <title>Loteria</title>
+</head>
+
+<body ng-app="app">
+    <div class="container" ng-controller="appController">
+        <h1 class="text-success"> Loterias (Mega Sena) </h1>
+        <div class="row">
+           
+            <div class="col-md-6">
+                <div class="alert alert-danger" role="alert" ng-if="possuiErro">
+                   {{mensagemErro}}
+                </div>
+                <form ng-hide="verResultado">
+                    <div class="form-group">
+                        <label for="nome">Informe seu nome:</label>
+                        <input type="text" class="form-control" id="nome" placeholder="Nome" ng-model="jogo.nome">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="qnumeros">Quantidade de Numeros:</label>
+                        <input type="text" class="form-control col-3" id="qnumeros" ng-model="qtdeNumeros" ng-blur="setQtdeNumeros(qtdeNumeros)">
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" ng-model="eSurpresinha" ng-click="getSurpresinha();">
+                        <label class="form-check-label" for="exampleCheck1">Deseja uma surpresinha?</label>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Números</label>
+                        <div class="row">
+                            <div class="col-md-4 p-2" ng-repeat="item in jogo.numeros track by $index">
+                                <input type="text" class="form-control" id="numeros" ng-model="item">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" ng-click="gravarJogo();">Gravar</button>
+                    <button type="button" class="btn btn-success" ng-click="sortear();">Gerar Sorteio</button>
+                    <button type="button" class="btn btn-warning" ng-click="jogarNovamente();">Limpar</button>
+                </form>
+
+                <div ng-show="verResultado">
+                    <h2>Resultado</h2>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="text-info"><span ng-repeat="item in resultado.Numeros track by $index">{{item}} </span></h3>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span>Total de ganhadores na Sena = {{resultado.GanhadoresSena.length}}</span>
+                                    <hr />                                 
+                                    <table class="table table-bordered" ng-if="resultado.GanhadoresSena.length > 0">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome:</th>
+                                                <th>Numeros:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="ganhador in resultado.GanhadoresSena">
+                                                <td>
+                                                    {{ganhador.Nome}}
+                                                </td>
+                                                <td>
+                                                    <strong ng-repeat="item in ganhador.Numeros track by $index">{{ item }}  </strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>Total de ganhadores na Quina = {{resultado.GanhadoresQuina.length}}</span>
+                                    <hr />
+                                    <table class="table table-bordered" ng-if="resultado.GanhadoresQuina.length > 0">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome:</th>
+                                                <th>Numeros:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="ganhador in resultado.GanhadoresQuina">
+                                                <td>
+                                                    {{ganhador.Nome}}
+                                                </td>
+                                                <td>
+                                                    <strong ng-repeat="item in ganhador.Numeros track by $index">{{ item }}  </strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>Total de ganhadores na Quadra = {{resultado.GanhadoresQuadra.length}}</span>
+                                    <hr />
+                                    <table class="table table-bordered" ng-if="resultado.GanhadoresQuadra.length > 0">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome:</th>
+                                                <th>Numeros:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="ganhador in resultado.GanhadoresQuadra">
+                                                <td>
+                                                    {{ganhador.Nome}}
+                                                </td>
+                                                <td>
+                                                    <strong ng-repeat="item in ganhador.Numeros track by $index">{{ item }}  </strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success" ng-click="jogarNovamente();">Jogar Novamente</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div ng-if="apostas.length > 0">
+                    <h4>Apostas</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nome:</th>
+                                <th>Numeros:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="aposta in apostas">
+                                <td>
+                                    {{aposta.nome}}
+                                </td>
+                                <td>
+                                    <strong ng-repeat="item in aposta.numeros track by $index">{{ item }}  </strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+    <script src="Scripts/jquery-3.0.0.js"></script>
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <script src="Scripts/popper.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/index.controller.js"></script>
+</body>
+
+</html>
